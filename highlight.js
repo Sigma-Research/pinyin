@@ -29,7 +29,7 @@ export default (input, match, successive, renderer) => {
         let {start, length} = match
         if (!length) return input
         let before = input.substring(0, start)
-        let match_str = input.substring(start, length)
+        let match_str = input.substring(start, start + length)
         let after = input.substring(start + length)
         return before + render(match_str, renderer) + after
     }

@@ -76,6 +76,7 @@ describe('pinyin', () => {
 
     it('highlight', () => {
         expect(highlight('你好', {start: 0, length: 1})).to.equal('<span class="match">你</span>好')
+        expect(highlight('你好', {start: 1, length: 1})).to.equal('你<span class="match">好</span>')
         expect(highlight('你好', '你')).to.equal('<span class="match">你</span>好')
         expect(highlight('hello world', 'hello')).to.equal('<span class="match">hello</span> world')
         expect(highlight('the subject is about subway', 'sub')).to.equal('the <span class="match">sub</span>ject is about <span class="match">sub</span>way')

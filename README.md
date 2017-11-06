@@ -15,7 +15,7 @@ or by `require`
 ```javascript
 let pinyin = require('pinyin')
 ```
-you can only `require` what you need
+you can `require` only what you need
 ```javascript
 let pinyinSearch = require('pinyin/search')
 ```
