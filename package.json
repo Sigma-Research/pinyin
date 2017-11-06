@@ -1,7 +1,7 @@
 {
   "name": "pinyin",
   "version": "1.0.0",
-  "description": "pinyin search, match and hightlight",
+  "description": "pinyin search, match and highlight",
   "main": "pinyin.js",
   "scripts": {
     "test": "BABEL_ENV=test nyc --reporter=html mocha --require babel-register test/**/*.spec.js",
@@ -14,7 +14,7 @@
   },
   "keywords": [
     "pinyin",
-    "hightlight"
+    "highlight"
   ],
   "author": "wangfengming <wangfengming88@gmail.com>",
   "license": "ISC",

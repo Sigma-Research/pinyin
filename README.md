@@ -1,6 +1,6 @@
 # pinyin
 
-pinyin search, match and hightlight
+pinyin search, match and highlight
 
 ## install
 ```bash
