@@ -1,6 +1,6 @@
 {
   "name": "pinyin",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "pinyin search, match and highlight",
   "main": "pinyin.js",
   "scripts": {
