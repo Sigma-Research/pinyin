@@ -4,7 +4,7 @@ pinyin search, match and highlight
 
 ## install
 ```bash
-npm install --save git+ssh://git@github.com/wangfengming/pinyin.git#1.0.0
+npm install --save git+ssh://git@github.com/wangfengming/pinyin.git#1.0.1
 ```
 
 you can include pinyin by direct `<scrip>` 
@@ -35,7 +35,7 @@ let filtered = pinyin.search(students, '三', ['name', 'school'])
 // let filtered = pinyin.search(students, 'san', ['name', 'school'])
 ```
 the result is
-```javascript
+```
 [
   {
     name: '张三',
@@ -69,6 +69,124 @@ or
 pinyin.highlight(filtered[0].name, filtered[0].$$pinyin.name, match => `[${match}]`)
 // `张[三]`
 ```
+
+### work with vue
+
+template:
+```html
+<input type="text" v-model="search">
+<table>
+<tbody>
+    <tr v-for="student in filtered">
+        <td><span v-html="highlight(student.name, student.$$pinyin.name)"></span></td>
+        <td><span v-html="highlight(student.school, student.$$pinyin.school)"></span></td>
+    </tr>
+</tbody>
+</table>
+```
+
+vm:
+```javascript
+import search from 'pinyin/search'
+import highlight from 'pinyin/highlight'
+
+export default {
+    data() {
+        return {
+            search: '',
+            students: [
+                {name: '张三', school: '衡水一中'},
+                {name: '李四', school: '北京三中'},
+                {name: '王五', school: '济南二中'}
+            ]
+        }
+    },
+    methods: {
+        highlight: highlight
+    },
+    computed: {
+        filtered() {
+            return search(this.students, this.search, ['name', 'school'])
+        }
+    }
+}
+```
+
+### work with angular1
+
+template:
+```html
+<div ng-controller="MainCtrl as main">
+<input type="text" ng-model="main.search">
+<table>
+<tbody>
+    <tr ng-repeat="student in main.students|pinyinSearch:main.search:['name', 'school']">
+        <td><span ng-bind-html="student.name|highlight:student.$$pinyin.name"></span></td>
+        <td><span ng-bind-html="student.school|highlight:student.$$pinyin.school"></span></td>
+    </tr>
+</tbody>
+</table>
+</div>
+```
+mv:
+```javascript
+angular.module('app').controller('MainCtrl', ['$scope', $scope => {
+    $scope.search = ''
+    $scope.students = [
+        {name: '张三', school: '衡水一中'},
+        {name: '李四', school: '北京三中'},
+        {name: '王五', school: '济南二中'}
+    ]
+}])
+```
+
+filter:
+```javascript
+import search from 'pinyin/search'
+import highlight from 'pinyin/highlight'
+ 
+angular.module('app')
+.filter('pinyinSearch', [() => search])
+.filter('highlight', [() => highlight])
+```
+
+#### or without filter:
+
+template:
+```html
+<div ng-controller="MainCtrl as main">
+<input type="text" ng-model="main.search">
+<table>
+<tbody>
+    <tr ng-repeat="student in main.filtered">
+        <td><span ng-bind-html="highlight(student.name, student.$$pinyin.name)"></span></td>
+        <td><span ng-bind-html="highlight(student.school, student.$$pinyin.school)"></span></td>
+    </tr>
+</tbody>
+</table>
+</div>
+```
+
+mv:
+```javascript
+import search from 'pinyin/search'
+import highlight from 'pinyin/highlight'
+
+angular.module('app').controller('MainCtrl', ['$scope', $scope => {
+    $scope.search = ''
+    $scope.students = [
+        {name: '张三', school: '衡水一中'},
+        {name: '李四', school: '北京三中'},
+        {name: '王五', school: '济南二中'}
+    ]
+    $scope.highlight = highlight
+    $scope.$watch('search', () => {
+        $scope.filtered = search($scope.students, $scope.search, ['name', 'score'])
+    })
+}])
+```
+
+> Don't use `pinyinSearch` filter, recommend to watch `search` change and compute out the filtered students
 
 ## test
 
