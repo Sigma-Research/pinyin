@@ -1,0 +1,46 @@
+{
+  "name": "pinyin",
+  "version": "1.0.0",
+  "description": "pinyin search, match and hightlight",
+  "main": "pinyin.js",
+  "scripts": {
+    "test": "BABEL_ENV=test nyc --reporter=html mocha --require babel-register test/**/*.spec.js",
+    "lint": "eslint src .",
+    "dist": "rollup -c"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wangfengming/pinyin.git"
+  },
+  "keywords": [
+    "pinyin",
+    "hightlight"
+  ],
+  "author": "wangfengming <wangfengming88@gmail.com>",
+  "license": "ISC",
+  "dependencies": {},
+  "peerDependencies": {},
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^8.0.1",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-plugin-transform-export-extensions": "^6.22.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "chai": "^4.1.2",
+    "eslint": "^4.10.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "mocha": "^4.0.1",
+    "nyc": "^11.3.0",
+    "rollup": "^0.50.0",
+    "rollup-plugin-babel": "^3.0.2",
+    "rollup-plugin-commonjs": "^8.2.6",
+    "rollup-plugin-node-resolve": "^3.0.0"
+  }
+}
