@@ -469,7 +469,7 @@ var convertFull = (function (text) {
             short += ch;
         } else {
             var name = invert[ch];
-            if (name !== undefined) {
+            if (name) {
                 map.push(full.length);
                 full += name;
                 short += name[0];
@@ -533,7 +533,7 @@ var exec = (function (pinyin, filter) {
 var test = (function (pinyin, filter) {
     var caseInsensitive = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
 
-    if (!filter) return true;
+    if (!filter) return false;
     if (caseInsensitive) filter = filter.toLowerCase();
     var text = caseInsensitive ? pinyin.text.toLowerCase() : pinyin.text;
     if (text.indexOf(filter) >= 0) return true;
@@ -548,14 +548,21 @@ var test = (function (pinyin, filter) {
  * 如果 a 在 b 前面，返回 -1；如果 a 和 b 读音相同，返回 0；如果 a 在 b 后面，返回 1
  * @param {string} a 待比较的第一个汉字
  * @param {string} b 待比较的第二个汉字
+ * @param caseInsensitive 忽略大小写，默认为 true
  * @returns {number} 读音顺序
  */
 var compare = (function (a, b) {
-  a = convertFull(a).full;
-  b = convertFull(b).full;
-  if (a < b) return -1;
-  if (a > b) return 1;
-  return 0;
+    var caseInsensitive = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+
+    a = convert(a);
+    b = convert(b);
+    if (caseInsensitive) {
+        a = a.toLowerCase();
+        b = b.toLowerCase();
+    }
+    if (a < b) return -1;
+    if (a > b) return 1;
+    return 0;
 });
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -711,40 +718,40 @@ var search = (function (input, filter, fields) {
  * @param input 文本
  * @param match 待高亮的 string；或者是待高亮的位置 {start, length}
  * @param successive 当使用字符串匹配时，指出待高亮字符串是否应连续
- * @param render 高亮方式，默认为添加 css class `match`。
+ * @param renderer 高亮方式，默认为添加 css class `match`。
  * 可以为 string，指定 css class；可以为 Function: string => string，接收待高亮 string， 返回高亮方式
  * @returns {*} 高亮后的字符串
  */
-var highlight = (function (input, match, successive, render) {
+var highlight = (function (input, match, successive, renderer) {
     if (!input || !match) return input;
-    var doRender = function doRender(match_str, render) {
-        render = render || 'match';
-        return typeof render === 'string' ? '<span class="' + render + '">' + match_str + '</span>' : render(match_str);
+    var render = function render(match_str, renderer) {
+        renderer = renderer || 'match';
+        return typeof renderer === 'string' ? '<span class="' + renderer + '">' + match_str + '</span>' : renderer(match_str);
     };
     if (typeof match === 'string') {
         // highlight by match (input, match, successive = false)
         if (successive === true) {
-            return input.replace(match, doRender(match, render));
+            return input.replace(match, render(match, renderer));
         } else {
-            render = successive;
+            renderer = successive;
             var regexp = match.split(/\s+/g).map(function (s) {
                 return s.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&');
             }).join('|');
             return input.replace(new RegExp(regexp, 'igm'), function (match) {
-                return doRender(match, render);
+                return render(match, renderer);
             });
         }
     } else {
         // highlight by position(input, {start, length})
-        render = successive;
+        renderer = successive;
         var start = match.start,
             length = match.length;
 
         if (!length) return input;
         var before = input.substring(0, start);
-        var match_str = input.substring(start, length);
+        var match_str = input.substring(start, start + length);
         var after = input.substring(start + length);
-        return before + doRender(match_str, render) + after;
+        return before + render(match_str, renderer) + after;
     }
 });
 
