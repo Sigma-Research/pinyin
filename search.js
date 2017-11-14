@@ -19,7 +19,7 @@ import init from './init'
  */
 export default (input, filter, fields, or = true, pinyinKey = '$$pinyin') => {
     if (!input) return
-    init(input, fields)
+    init(input, fields, pinyinKey)
     filter = (filter && filter.trim()) || ''
     if (!filter) return input
     let test = item => {

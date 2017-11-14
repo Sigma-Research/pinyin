@@ -4,7 +4,7 @@ pinyin search, match and highlight
 
 ## install
 ```bash
-npm install --save git+ssh://git@github.com/wangfengming/pinyin.git#1.0.1
+npm install --save git+ssh://git@github.com/wangfengming/pinyin.git#1.0.2
 ```
 
 you can include pinyin by direct `<scrip>` 

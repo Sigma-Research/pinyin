@@ -7,7 +7,7 @@ export default {
     name: 'pinyin',
     output: {
         file: 'dist/pinyin.js',
-        format: 'iife'
+        format: 'umd'
     },
     plugins: [
         babel({
