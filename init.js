@@ -1,4 +1,4 @@
-import {getValueByPath, setValueByPath} from './util'
+import { getValueByPath, setValueByPath } from './util'
 
 import convertFull from './convertFull'
 
@@ -23,7 +23,7 @@ export default (input, fields, pinyinKey = '$$pinyin') => {
         fields.forEach(field => {
             let pinyin = getValueByPath(pinyinData, field)
             if (!pinyin) {
-                setValueByPath(pinyinData, field, convertFull(getValueByPath(item, field, '') + ''))
+                setValueByPath(pinyinData, field, convertFull(getValueByPath(item, field) || ''))
             } else {
                 pinyin.start = pinyin.length = 0
             }

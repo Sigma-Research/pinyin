@@ -1,4 +1,4 @@
-import { compare, convert, convertFull, exec, highlight, search, test } from '..'
+import { compare, convert, convertFull, exec, highlight, search, test } from '../pinyin'
 import { expect } from 'chai'
 
 describe('pinyin', () => {
@@ -47,24 +47,32 @@ describe('pinyin', () => {
         match = search(array, 'wang', ['name'])
         expect(match.length).to.equal(1)
         expect(match[0].name).to.equal('王2小')
-        expect(match[0].$$pinyin.name).to.deep.include({start: 0, length: 1})
+        expect(match[0].$$pinyin.name).to.include({start: 0, length: 1})
 
         match = search(array, 'zhangsan', ['name'])
         expect(match.length).to.equal(1)
         expect(match[0].name).to.equal('张三')
-        expect(match[0].$$pinyin.name).to.deep.include({start: 0, length: 2})
+        expect(match[0].$$pinyin.name).to.include({start: 0, length: 2})
 
         match = search(array, 'zs', ['name'])
         expect(match.length).to.equal(1)
         expect(match[0].name).to.equal('张三')
-        expect(match[0].$$pinyin.name).to.deep.include({start: 0, length: 2})
+        expect(match[0].$$pinyin.name).to.include({start: 0, length: 2})
 
         match = search(array, 'san', ['name', 'group'])
         expect(match.length).to.equal(2)
         expect(match[0].group).to.equal('三班')
-        expect(match[0].$$pinyin.group).to.deep.include({start: 0, length: 1})
+        expect(match[0].$$pinyin.group).to.include({start: 0, length: 1})
         expect(match[1].name).to.equal('张三')
-        expect(match[1].$$pinyin.name).to.deep.include({start: 1, length: 1})
+        expect(match[1].$$pinyin.name).to.include({start: 1, length: 1})
+    })
+
+    it('not search on undefined', () => {
+        let array = [
+            {name: 'Bob'}
+        ]
+        expect(search(array, 'xx', ['group'])).to.deep.equal([])
+        expect(array[0].$$pinyin.group).to.deep.include({full: '', short: '', text: '', map: []})
     })
 
     it('compare', () => {
