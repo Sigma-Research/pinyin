@@ -1,5 +1,8 @@
-var pinyin = (function (exports) {
-'use strict';
+(function (global, factory) {
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+	typeof define === 'function' && define.amd ? define(['exports'], factory) :
+	(factory((global.pinyin = {})));
+}(this, (function (exports) { 'use strict';
 
 /**
  * 读音和中文字的映射对象
@@ -670,7 +673,7 @@ var search = (function (input, filter, fields) {
     var pinyinKey = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : '$$pinyin';
 
     if (!input) return;
-    init(input, fields);
+    init(input, fields, pinyinKey);
     filter = filter && filter.trim() || '';
     if (!filter) return input;
     var test = function test(item) {
@@ -766,6 +769,6 @@ exports.init = init;
 exports.search = search;
 exports.highlight = highlight;
 
-return exports;
+Object.defineProperty(exports, '__esModule', { value: true });
 
-}({}));
+})));
