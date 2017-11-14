@@ -6,6 +6,7 @@
   "scripts": {
     "test": "BABEL_ENV=test nyc --reporter=html mocha --require babel-register test/**/*.spec.js",
     "lint": "eslint src .",
+    "lint:fix": "eslint src .",
     "dist": "rollup -c"
   },
   "repository": {

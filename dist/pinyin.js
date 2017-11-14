@@ -640,7 +640,7 @@ var init = (function (input, fields) {
         fields.forEach(function (field) {
             var pinyin = getValueByPath(pinyinData, field);
             if (!pinyin) {
-                setValueByPath(pinyinData, field, convertFull(getValueByPath(item, field, '') + ''));
+                setValueByPath(pinyinData, field, convertFull(getValueByPath(item, field) || ''));
             } else {
                 pinyin.start = pinyin.length = 0;
             }
