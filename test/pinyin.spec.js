@@ -1,4 +1,4 @@
-import { compare, convert, convertFull, exec, highlight, search, test } from '../pinyin'
+import { compare, convert, convertFull, exec, highlight, search, test } from '../src/pinyin'
 import { expect } from 'chai'
 
 describe('pinyin', () => {

@@ -3,7 +3,7 @@ import resolve from 'rollup-plugin-node-resolve'
 import babel from 'rollup-plugin-babel'
 
 export default {
-    input: 'pinyin.js',
+    input: 'src/pinyin.js',
     name: 'pinyin',
     output: {
         file: 'dist/pinyin.js',

@@ -4,7 +4,7 @@ pinyin search, match and highlight
 
 ## install
 ```bash
-npm install --save git+ssh://git@github.com/wangfengming/pinyin.git#1.0.2
+npm install --save git+ssh://git@github.com/wangfengming/pinyin.git#1.0.3
 ```
 
 you can include pinyin by direct `<scrip>` 
@@ -14,10 +14,6 @@ you can include pinyin by direct `<scrip>`
 or by `require`
 ```javascript
 let pinyin = require('pinyin')
-```
-you can `require` only what you need
-```javascript
-let pinyinSearch = require('pinyin/search')
 ```
 
 ## Usage
@@ -87,8 +83,7 @@ template:
 
 vm:
 ```javascript
-import search from 'pinyin/search'
-import highlight from 'pinyin/highlight'
+import {search, highlight} from 'pinyin'
 
 export default {
     data() {
@@ -142,8 +137,7 @@ angular.module('app').controller('MainCtrl', ['$scope', $scope => {
 
 filter:
 ```javascript
-import search from 'pinyin/search'
-import highlight from 'pinyin/highlight'
+import {search, highlight} from 'pinyin'
  
 angular.module('app')
 .filter('pinyinSearch', [() => search])
@@ -169,8 +163,7 @@ template:
 
 mv:
 ```javascript
-import search from 'pinyin/search'
-import highlight from 'pinyin/highlight'
+import {search, highlight} from 'pinyin'
 
 angular.module('app').controller('MainCtrl', ['$scope', $scope => {
     $scope.search = ''
