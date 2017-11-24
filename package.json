@@ -1,12 +1,12 @@
 {
   "name": "pinyin",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "pinyin search, match and highlight",
   "main": "dist/pinyin.js",
   "scripts": {
     "test": "BABEL_ENV=test nyc --reporter=html mocha --require babel-register test/**/*.spec.js",
-    "lint": "eslint src .",
-    "lint:fix": "eslint src .",
+    "lint": "eslint src ./src",
+    "lint:fix": "eslint src ./src",
     "dist": "rollup -c"
   },
   "repository": {
