@@ -7,7 +7,6 @@ import invert from './invert'
  *   short: string,     // 韵母
  *   map: Array,        // 每个字在 full 中的位置
  *   text: string,      // 原始的中文
- *   toString: Function // 将返回全拼音（即 full）
  * }
  * @param text 中文字符串
  * @returns {{full: string, short: string, map: Array, text: string}} 拼音对象
