@@ -1,4 +1,4 @@
-import { compare, convert, convertFull, exec, highlight, search, test } from '../src/pinyin'
+import { compare, convert, convertFull, exec, highlight, init, search, test } from '../src/pinyin'
 import { expect } from 'chai'
 
 describe('pinyin', () => {
@@ -10,7 +10,6 @@ describe('pinyin', () => {
 
     it('convertFull', () => {
         let pinyin = convertFull('hello 你好')
-        expect(pinyin + '').to.equal('hello nihao')
         expect(pinyin.full).to.equal('hello nihao')
         expect(pinyin.short).to.equal('hello nh')
         expect(convertFull('hello 你好').map).to.deep.equal([0, 1, 2, 3, 4, 5, 6, 8])
@@ -35,6 +34,44 @@ describe('pinyin', () => {
         expect(test(pinyin, 'hello 你好')).to.equal(true)
         expect(test(pinyin, 'nh')).to.equal(true)
         expect(test(pinyin, 'hello nh')).to.equal(true)
+    })
+
+    it('init', () => {
+        let array = [
+            {name: '王2小', group: '三班'},
+            {name: '张三', group: '四班'},
+        ]
+        init(array, ['name'])
+        expect(array).to.deep.equal([
+            {
+                'name': '王2小',
+                'group': '三班',
+                '$$pinyin': {
+                    'name': {
+                        'full': 'wang2xiao',
+                        'short': 'w2x',
+                        'map': [0, 4, 5],
+                        'text': '王2小',
+                        'length': null,
+                        'start': null
+                    }
+                }
+            },
+            {
+                'name': '张三',
+                'group': '四班',
+                '$$pinyin': {
+                    'name': {
+                        'full': 'zhangsan',
+                        'short': 'zs',
+                        'map': [0, 5],
+                        'text': '张三',
+                        'length': null,
+                        'start': null
+                    }
+                }
+            }
+        ])
     })
 
     it('search', () => {
@@ -94,5 +131,16 @@ describe('pinyin', () => {
     it('highlight with custom renderer', () => {
         expect(highlight('你好', {start: 1, length: 2}, match => `[${match}]`)).to.equal('你[好]')
         expect(highlight('你好', '好', match => `[${match}]`)).to.equal('你[好]')
+    })
+
+    it('search and highlight', () => {
+        let array = [
+            {name: '王2小', group: '三班'},
+            {name: '张三', group: '四班'},
+        ]
+        search(array, 'wang', ['name'])
+        let [a, b] = array
+        expect(highlight(a.name, a.$$pinyin.name)).to.equal('<span class="match">王</span>2小')
+        expect(highlight(b.name, b.$$pinyin.name)).to.equal('张三')
     })
 })

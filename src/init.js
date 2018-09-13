@@ -15,7 +15,10 @@ export default (input, fields, pinyinKey = '$$pinyin') => {
     if (!input) return
     let setAttr = item => {
         let pinyinData = getValueByPath(item, pinyinKey)
-        if (!pinyinData) setValueByPath(item, pinyinKey, pinyinData = {})
+        if (!pinyinData) {
+            pinyinData = {}
+            setValueByPath(item, pinyinKey, pinyinData)
+        }
         if (!fields) {
             fields = []
             for (let field in pinyinData) fields.push(field)
@@ -23,10 +26,10 @@ export default (input, fields, pinyinKey = '$$pinyin') => {
         fields.forEach(field => {
             let pinyin = getValueByPath(pinyinData, field)
             if (!pinyin) {
-                setValueByPath(pinyinData, field, convertFull(getValueByPath(item, field) || ''))
-            } else {
-                pinyin.start = pinyin.length = 0
+                pinyin = convertFull(getValueByPath(item, field) || '')
+                setValueByPath(pinyinData, field, pinyin)
             }
+            pinyin.start = pinyin.length = null
         })
     }
     if (Array.isArray(input)) {

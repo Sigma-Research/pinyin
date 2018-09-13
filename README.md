@@ -4,10 +4,10 @@ pinyin search, match and highlight
 
 ## install
 ```bash
-npm install --save git+ssh://git@github.com/wangfengming/pinyin.git#1.0.3
+npm install --save git+ssh://git@github.com/wangfengming/pinyin.git#VERSION
 ```
 
-you can include pinyin by direct `<scrip>` 
+you can include pinyin by direct `<script>`
 ```html
 <script src="node_modules/pinyin/dist/pinyin.js"></script>
 ```
@@ -138,7 +138,7 @@ angular.module('app').controller('MainCtrl', ['$scope', $scope => {
 filter:
 ```javascript
 import {search, highlight} from 'pinyin'
- 
+
 angular.module('app')
 .filter('pinyinSearch', [() => search])
 .filter('highlight', [() => highlight])

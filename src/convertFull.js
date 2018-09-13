@@ -10,7 +10,7 @@ import invert from './invert'
  *   toString: Function // 将返回全拼音（即 full）
  * }
  * @param text 中文字符串
- * @returns {{full: string, short: string, map: Array, text: string, toString: (function(): string)}} 拼音对象
+ * @returns {{full: string, short: string, map: Array, text: string}} 拼音对象
  */
 export default text => {
     let full = ''
@@ -37,6 +37,5 @@ export default text => {
             }
         }
     }
-    let toString = () => full
-    return {full, short, map, text, toString}
+    return {full, short, map, text}
 }
