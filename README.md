@@ -83,17 +83,19 @@ template:
 
 vm:
 ```javascript
-import {search, highlight} from 'pinyin'
+import {search, highlight, init as initPinyin} from 'pinyin'
 
 export default {
     data() {
+        const students = [
+            {name: '张三', school: '衡水一中'},
+            {name: '李四', school: '北京三中'},
+            {name: '王五', school: '济南二中'}
+        ]
+        initPinyin(students, ['name', 'school'])
         return {
             search: '',
-            students: [
-                {name: '张三', school: '衡水一中'},
-                {name: '李四', school: '北京三中'},
-                {name: '王五', school: '济南二中'}
-            ]
+            students
         }
     },
     methods: {
@@ -106,6 +108,8 @@ export default {
     }
 }
 ```
+> You should call `init(students, ['name', 'school'])` before assign students to vm to make it reactivate.
+> Import `init` by `import {init} from 'pinyin'`
 
 ### work with angular1
 
