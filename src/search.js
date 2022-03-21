@@ -56,5 +56,14 @@ export default (input, filter, fields, or = true, pinyinKey = '$$pinyin') => {
         }
         return true
     }
-    return input.filter(test)
+    // return input.filter(test)
+    return input.filter(item => {
+        if (test(item)) {
+            return true;
+        }
+        if (item.children && item.children.length) {
+            return item.children.some(item => test(item));
+        }   
+        return false;
+    });
 }

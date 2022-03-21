@@ -734,7 +734,18 @@ var search = (function (input, filter, fields) {
         }
         return true;
     };
-    return input.filter(test);
+    // return input.filter(test)
+    return input.filter(function (item) {
+        if (test(item)) {
+            return true;
+        }
+        if (item.children && item.children.length) {
+            return item.children.some(function (item) {
+                return test(item);
+            });
+        }
+        return false;
+    });
 });
 
 /**
