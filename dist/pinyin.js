@@ -499,11 +499,11 @@ var exec = (function (pinyin, filter) {
     if (!filter) return null;
     if (caseInsensitive) filter = filter.toLowerCase();
     var text = caseInsensitive ? pinyin.text.toLowerCase() : pinyin.text;
-    if ((index = text.indexOf(filter)) >= 0) return { start: index, length: filter.length };
+    if ((index = find(text, filter)) >= 0) return { start: index, length: filter.length };
     var short = caseInsensitive ? pinyin.short.toLowerCase() : pinyin.short;
-    if ((index = short.indexOf(filter)) >= 0) return { start: index, length: filter.length };
+    if ((index = find(short, filter)) >= 0) return { start: index, length: filter.length };
     var full = caseInsensitive ? pinyin.full.toLowerCase() : pinyin.full;
-    if ((index = full.indexOf(filter)) >= 0) {
+    if ((index = find(full, filter)) >= 0) {
         var map = pinyin.map;
         var indexEnd = index + filter.length;
         var start = void 0;
@@ -520,6 +520,31 @@ var exec = (function (pinyin, filter) {
     }
     return null;
 });
+
+/**
+ * 忽略某些部分、找到关键词的位置
+ * @param {*} text 
+ * @param {*} keyword 
+ * @returns 
+ */
+function find(text, keyword) {
+    var r = -1;
+    for (var i = 0; i < text.length;) {
+        if (text[i] === '<' && /^<[^<>]+>/.test(text.slice(i))) {
+            i += text.slice(i).match(/^<[^<>]+>/)[0].length;
+            continue;
+        } else if (text[i] === '$' && /^\$\$[^\$]*\$\$/.test(text.slice(i))) {
+            i += text.slice(i).match(/^\$\$[^\$]*\$\$/)[0].length;
+            continue;
+        } else if (text.slice(i, i + keyword.length) === keyword) {
+            r = i;
+            break;
+        } else {
+            i += 1;
+        }
+    }
+    return r;
+}
 
 /**
  * 测试字符串 pinyin 是否包含 filter
