@@ -669,6 +669,9 @@ var init = (function (input, fields) {
             }
             pinyin.start = pinyin.length = null;
         });
+        if (item.children) {
+            item.children.forEach(setAttr);
+        }
     };
     if (Array.isArray(input)) {
         input.forEach(setAttr);
