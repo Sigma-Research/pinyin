@@ -31,6 +31,9 @@ export default (input, fields, pinyinKey = '$$pinyin') => {
             }
             pinyin.start = pinyin.length = null
         })
+        if (item.children) {
+            item.children.forEach(setAttr);
+        }
     }
     if (Array.isArray(input)) {
         input.forEach(setAttr)
